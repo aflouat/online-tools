@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mon soutien psy : simulateur de rentabilité pour psychologue libéral</title>
+<meta name="description" content="Mon soutien psy est-il rentable pour votre cabinet ? Comparez gratuitement votre revenu net avec et sans le dispositif (50 € la séance, 12 séances par an). Sans compte, rien n'est enregistré.">
+<link rel="canonical" href="https://aflouat.github.io/online-tools/psy-simulateur/">
+<meta name="robots" content="index,follow,max-snippet:-1">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Mon soutien psy : est-ce rentable pour mon cabinet ?">
+<meta property="og:description" content="Simulateur gratuit : revenu net d'un psychologue libéral avec et sans Mon soutien psy.">
+<meta property="og:url" content="https://aflouat.github.io/online-tools/psy-simulateur/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mon soutien psy : est-ce rentable pour mon cabinet ?">
+<meta name="twitter:description" content="Simulateur gratuit : revenu net d'un psychologue libéral avec et sans Mon soutien psy.">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+ {"@type":"WebApplication","name":"Simulateur Mon soutien psy","url":"https://aflouat.github.io/online-tools/psy-simulateur/","applicationCategory":"BusinessApplication","operatingSystem":"Any","inLanguage":"fr","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"description":"Compare le revenu net annuel d'un psychologue libéral avec et sans le dispositif Mon soutien psy."},
+ {"@type":"FAQPage","mainEntity":[
+  {"@type":"Question","name":"Quel est le tarif d'une séance Mon soutien psy ?","acceptedAnswer":{"@type":"Answer","text":"Selon ameli.fr, chaque séance est facturée 50 € et le psychologue ne peut pas demander de dépassement."}},
+  {"@type":"Question","name":"Combien de séances sont remboursées par an ?","acceptedAnswer":{"@type":"Answer","text":"Jusqu'à 12 séances par année civile : une séance d'évaluation puis au maximum 11 séances de suivi."}},
+  {"@type":"Question","name":"Qui rembourse les séances ?","acceptedAnswer":{"@type":"Answer","text":"L'Assurance Maladie prend en charge 60 % et la complémentaire santé généralement les 40 % restants."}},
+  {"@type":"Question","name":"Mes données sont-elles enregistrées par le simulateur ?","acceptedAnswer":{"@type":"Answer","text":"Non. Tous les calculs se font dans votre navigateur, rien n'est envoyé ni stocké."}}
+ ]}
+]}
+</script>
+<style>
+:root{--bg:#fafaf8;--card:#fff;--ink:#1c1c1a;--muted:#6b6b66;--line:#e4e4de;--accent:#1d6f5f;--warn:#a5420e;--good:#0a7d32;--bad:#b3261e}
+@media(prefers-color-scheme:dark){:root{--bg:#141413;--card:#1e1e1c;--ink:#ecece8;--muted:#9a9a93;--line:#34342f;--accent:#4fb6a1;--warn:#e8925c;--good:#5cc77f;--bad:#f2837b}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:860px;margin:0 auto;padding:1.5rem 16px 3rem}
+h1{font-size:1.6rem;margin:.2rem 0 .3rem}h2{font-size:1.1rem;margin:0 0 .8rem}h3{font-size:.98rem;margin:1rem 0 .2rem}h3+p{margin:0;color:var(--muted)}
+.lead{color:var(--muted);margin:0 0 1.2rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:1rem 1.1rem}
+label{display:block;font-size:.88rem;color:var(--muted);margin-top:.7rem}
+label:first-of-type{margin-top:0}
+input{width:100%;font:inherit;padding:.5rem .6rem;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+input:focus{outline:2px solid var(--accent);outline-offset:1px}
+.fixed{display:flex;justify-content:space-between;margin-top:.7rem;font-size:.9rem}
+table{width:100%;border-collapse:collapse;margin-top:.4rem}
+th,td{padding:.45rem .3rem;text-align:right;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left}th{color:var(--muted);font-weight:600;font-size:.85rem}
+tr.total td{font-weight:700;border-bottom:0}
+.verdict{margin:1rem 0;padding:.9rem 1rem;border-radius:10px;border:1px solid var(--line);background:var(--card);font-size:1.02rem}
+.verdict b.good{color:var(--good)}.verdict b.bad{color:var(--bad)}
+.note{font-size:.85rem;color:var(--muted);margin-top:1.2rem}
+.warn{color:var(--warn)}
+footer{margin-top:1.5rem;font-size:.82rem;color:var(--muted)}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<main>
+<h1>Mon soutien psy : est-ce rentable pour mon cabinet ?</h1>
+<p class="lead">Comparez votre revenu avec et sans le dispositif. Tout se calcule dans votre navigateur : aucune donnée n'est envoyée ni enregistrée.</p>
+
+<div class="grid">
+  <section class="card" aria-labelledby="h-act">
+    <h2 id="h-act">Votre activité actuelle</h2>
+    <label for="spw">Séances par semaine</label>
+    <input id="spw" type="number" min="0" step="1" value="20">
+    <label for="weeks">Semaines travaillées par an</label>
+    <input id="weeks" type="number" min="1" max="52" step="1" value="44">
+    <label for="rate">Votre tarif libre par séance (€)</label>
+    <input id="rate" type="number" min="0" step="1" value="70">
+    <label for="noshow">Séances perdues (absences non facturées), %</label>
+    <input id="noshow" type="number" min="0" max="100" step="1" value="8">
+  </section>
+
+  <section class="card" aria-labelledby="h-msp">
+    <h2 id="h-msp">Avec Mon soutien psy</h2>
+    <label for="share">Part de vos séances qui passeraient par le dispositif, %</label>
+    <input id="share" type="number" min="0" max="100" step="5" value="40">
+    <label for="extra">Séances supplémentaires par semaine grâce au dispositif</label>
+    <input id="extra" type="number" min="0" step="1" value="0">
+    <label for="mspRate">Tarif dispositif par séance (€)</label>
+    <input id="mspRate" type="number" min="0" step="1" value="50">
+    <div class="fixed"><span>Plafond</span><span>12 séances / patient / an</span></div>
+    <p class="note" style="margin:.5rem 0 0">Tarif et plafond selon <a href="https://www.ameli.fr/assure/remboursements/rembourse/remboursement-seance-psychologue-mon-soutien-psy" rel="noopener">ameli.fr</a> : vérifiez les valeurs en vigueur.</p>
+  </section>
+</div>
+
+<section class="card" style="margin-top:1rem" aria-labelledby="h-ch">
+  <h2 id="h-ch">Vos charges</h2>
+  <div class="grid">
+    <div><label for="social">Cotisations sociales, % du chiffre d'affaires</label>
+    <input id="social" type="number" min="0" max="100" step="1" value="25"></div>
+    <div><label for="fixed">Frais fixes par mois (loyer, assurance, logiciel…) €</label>
+    <input id="fixed" type="number" min="0" step="10" value="600"></div>
+  </div>
+  <p class="note" style="margin:.7rem 0 0">Le taux de cotisations dépend de votre régime et de votre situation : demandez-le à votre comptable.</p>
+</section>
+
+<div class="verdict" id="verdict" role="status" aria-live="polite"></div>
+
+<section class="card" aria-labelledby="h-res">
+  <h2 id="h-res">Résultat annuel</h2>
+  <table>
+    <thead><tr><th></th><th>Sans le dispositif</th><th>Avec le dispositif</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+</section>
+
+<p class="note"><span class="warn">À vérifier avant de décider :</span> si vous pouvez garder votre tarif libre pour les patients hors dispositif, les délais de paiement, et l'effet réel sur votre remplissage. Les retards de paiement et les absences ne sont pas modélisés finement. Ce simulateur est indicatif : ce n'est pas un conseil fiscal ou financier.</p>
+<section class="card" style="margin-top:1.5rem" aria-labelledby="h-faq">
+  <h2 id="h-faq">Questions fréquentes sur Mon soutien psy</h2>
+  <h3>Quel est le tarif d'une séance ?</h3>
+  <p>Selon <a href="https://www.ameli.fr/assure/remboursements/rembourse/remboursement-seance-psychologue-mon-soutien-psy" rel="noopener">ameli.fr</a>, chaque séance est facturée 50 € et le psychologue ne peut pas demander de dépassement.</p>
+  <h3>Combien de séances par an ?</h3>
+  <p>Jusqu'à 12 séances par année civile : une séance d'évaluation puis au maximum 11 séances de suivi.</p>
+  <h3>Qui rembourse ?</h3>
+  <p>L'Assurance Maladie prend en charge 60 % et la complémentaire santé généralement les 40 % restants.</p>
+  <h3>Comment lire le résultat du simulateur ?</h3>
+  <p>Le simulateur compare votre revenu net avant impôt avec votre tarif libre actuel et avec une part de séances à 50 €. Si le dispositif vous amène de nouveaux patients, indiquez les séances supplémentaires par semaine : l'outil vous dit aussi combien il en faut pour compenser un éventuel manque à gagner.</p>
+  <h3>Mes données sont-elles enregistrées ?</h3>
+  <p>Non. Tous les calculs se font dans votre navigateur, rien n'est envoyé ni stocké.</p>
+</section>
+<footer>Outil gratuit et open source, indépendant de l'Assurance Maladie. Une erreur, un cas manquant ? <a href="https://github.com/aflouat/online-tools/issues" rel="noopener">Ouvrez une issue</a>. · <a href="../">Autres outils</a></footer>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const eur = n => new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);
+const num = id => { const v = parseFloat($(id).value); return Number.isFinite(v) && v >= 0 ? v : 0; };
+
+// Pure function: easy to test, no DOM.
+function simulate(p){
+  const paid = 1 - Math.min(p.noshow, 100) / 100;           // share of slots actually billed
+  const baseSessions = p.spw * p.weeks * paid;
+  const keep = 1 - p.social / 100;
+  const fixedYear = p.fixed * 12;
+
+  const caA = baseSessions * p.rate;
+  const netA = caA * keep - fixedYear;
+
+  const extraSessions = p.extra * p.weeks * paid;
+  const total = baseSessions + extraSessions;
+  const mspShare = Math.min(p.share, 100) / 100;
+  // Extra sessions come entirely through the scheme; existing ones follow the chosen share.
+  const mspSessions = baseSessions * mspShare + extraSessions;
+  const freeSessions = baseSessions * (1 - mspShare);
+  const caB = mspSessions * p.mspRate + freeSessions * p.rate;
+  const netB = caB * keep - fixedYear;
+
+  // Extra weekly sessions needed for B to equal A (at scheme rate).
+  const perExtra = p.weeks * paid * p.mspRate * keep;
+  const baseDiff = netB - p.extra * perExtra - netA;      // difference with zero extra sessions
+  const breakEvenExtra = baseDiff >= 0 ? 0 : (perExtra > 0 ? -baseDiff / perExtra : Infinity);
+
+  return {caA, netA, caB, netB, sessionsA: baseSessions, sessionsB: total, diff: netB - netA, breakEvenExtra};
+}
+
+function render(){
+  const r = simulate({
+    spw:num('spw'), weeks:num('weeks'), rate:num('rate'), noshow:num('noshow'),
+    share:num('share'), extra:num('extra'), mspRate:num('mspRate'),
+    social:num('social'), fixed:num('fixed')
+  });
+  $('rows').innerHTML = [
+    ['Séances facturées', Math.round(r.sessionsA), Math.round(r.sessionsB), v=>v.toLocaleString('fr-FR')],
+    ["Chiffre d'affaires", r.caA, r.caB, eur],
+    ['Revenu net avant impôt', r.netA, r.netB, eur, 'total'],
+  ].map(([l,a,b,f,c]) => `<tr class="${c||''}"><td>${l}</td><td>${f(a)}</td><td>${f(b)}</td></tr>`).join('');
+
+  const d = r.diff, v = $('verdict');
+  if (Math.abs(d) < 50) {
+    v.innerHTML = `Résultat <b>quasi identique</b> dans les deux cas (écart de ${eur(Math.abs(d))} par an).`;
+  } else if (d > 0) {
+    v.innerHTML = `Le dispositif ajoute environ <b class="good">${eur(d)}</b> de revenu net par an dans ce scénario.`;
+  } else {
+    const be = r.breakEvenExtra;
+    const tail = Number.isFinite(be)
+      ? ` Pour compenser, il faudrait environ <b>${(Math.ceil(be*10 - 1e-6)/10).toLocaleString('fr-FR')}</b> séance(s) de plus par semaine.`
+      : '';
+    v.innerHTML = `Le dispositif réduit votre revenu net d'environ <b class="bad">${eur(-d)}</b> par an dans ce scénario.${tail}`;
+  }
+}
+document.querySelectorAll('input').forEach(i => i.addEventListener('input', render));
+render();
+</script>
+</body>
+</html>
